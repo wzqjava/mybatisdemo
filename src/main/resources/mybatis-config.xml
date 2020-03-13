@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 加载jdbc信息 -->
+	<properties resource="db.properties"></properties>
+	<!-- 配置日志框架 -->
+	<settings>
+		<setting name="logImpl" value="LOG4J"/>
+		<!--懒加载-->
+		<setting name="lazyLoadingEnabled" value="false"/>
+		<!--缓存-->
+		<setting name="cacheEnabled" value="true"/>
+		<!--<setting name="aggressiveLazyLoading" value="false"/>-->
+	</settings>
+	<!--别名-->
+	<typeAliases>
+		<package name="com.smbms.pojo"/>
+	</typeAliases>
+	<!-- 配置数据环境 -->
+	<environments default="development">
+		<environment id="development">
+		<!-- 事务管理 -->
+			<transactionManager type="JDBC" />
+			<!--  数据源DBCP-->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 配置引入关系映射表  -->
+	<mappers>
+		<!--<mapper resource="UserMapper.xml" />-->
+		<package name="com.smbms.dao"/>
+		<package name="com.generate.dao"/>
+
+	</mappers>
+</configuration>

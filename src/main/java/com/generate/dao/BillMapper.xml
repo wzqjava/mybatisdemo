@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generate.dao.BillMapper">
+  <resultMap id="BaseResultMap" type="com.generate.pojo.Bill">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="billCode" jdbcType="VARCHAR" property="billCode" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="productDesc" jdbcType="VARCHAR" property="productDesc" />
+    <result column="productUnit" jdbcType="VARCHAR" property="productUnit" />
+    <result column="productCount" jdbcType="DECIMAL" property="productCount" />
+    <result column="totalPrice" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="isPayment" jdbcType="INTEGER" property="isPayment" />
+    <result column="createdBy" jdbcType="BIGINT" property="createdBy" />
+    <result column="creationDate" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modifyBy" jdbcType="BIGINT" property="modifyBy" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="providerId" jdbcType="BIGINT" property="providerId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, billCode, productName, productDesc, productUnit, productCount, totalPrice, isPayment, 
+    createdBy, creationDate, modifyBy, modifyDate, providerId
+  </sql>
+  <select id="selectByExample" parameterType="com.generate.pojo.BillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from smbms_bill
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from smbms_bill
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from smbms_bill
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.generate.pojo.BillExample">
+    delete from smbms_bill
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.generate.pojo.Bill">
+    insert into smbms_bill (id, billCode, productName, 
+      productDesc, productUnit, productCount, 
+      totalPrice, isPayment, createdBy, 
+      creationDate, modifyBy, modifyDate, 
+      providerId)
+    values (#{id,jdbcType=BIGINT}, #{billCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{productDesc,jdbcType=VARCHAR}, #{productUnit,jdbcType=VARCHAR}, #{productCount,jdbcType=DECIMAL}, 
+      #{totalPrice,jdbcType=DECIMAL}, #{isPayment,jdbcType=INTEGER}, #{createdBy,jdbcType=BIGINT}, 
+      #{creationDate,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=BIGINT}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{providerId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generate.pojo.Bill">
+    insert into smbms_bill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="billCode != null">
+        billCode,
+      </if>
+      <if test="productName != null">
+        productName,
+      </if>
+      <if test="productDesc != null">
+        productDesc,
+      </if>
+      <if test="productUnit != null">
+        productUnit,
+      </if>
+      <if test="productCount != null">
+        productCount,
+      </if>
+      <if test="totalPrice != null">
+        totalPrice,
+      </if>
+      <if test="isPayment != null">
+        isPayment,
+      </if>
+      <if test="createdBy != null">
+        createdBy,
+      </if>
+      <if test="creationDate != null">
+        creationDate,
+      </if>
+      <if test="modifyBy != null">
+        modifyBy,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+      <if test="providerId != null">
+        providerId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="billCode != null">
+        #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null">
+        #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productUnit != null">
+        #{productUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="productCount != null">
+        #{productCount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isPayment != null">
+        #{isPayment,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null">
+        #{modifyBy,jdbcType=BIGINT},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="providerId != null">
+        #{providerId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.generate.pojo.BillExample" resultType="java.lang.Long">
+    select count(*) from smbms_bill
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update smbms_bill
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.billCode != null">
+        billCode = #{record.billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        productName = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDesc != null">
+        productDesc = #{record.productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productUnit != null">
+        productUnit = #{record.productUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCount != null">
+        productCount = #{record.productCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalPrice != null">
+        totalPrice = #{record.totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isPayment != null">
+        isPayment = #{record.isPayment,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdBy != null">
+        createdBy = #{record.createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.creationDate != null">
+        creationDate = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBy != null">
+        modifyBy = #{record.modifyBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyDate != null">
+        modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.providerId != null">
+        providerId = #{record.providerId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update smbms_bill
+    set id = #{record.id,jdbcType=BIGINT},
+      billCode = #{record.billCode,jdbcType=VARCHAR},
+      productName = #{record.productName,jdbcType=VARCHAR},
+      productDesc = #{record.productDesc,jdbcType=VARCHAR},
+      productUnit = #{record.productUnit,jdbcType=VARCHAR},
+      productCount = #{record.productCount,jdbcType=DECIMAL},
+      totalPrice = #{record.totalPrice,jdbcType=DECIMAL},
+      isPayment = #{record.isPayment,jdbcType=INTEGER},
+      createdBy = #{record.createdBy,jdbcType=BIGINT},
+      creationDate = #{record.creationDate,jdbcType=TIMESTAMP},
+      modifyBy = #{record.modifyBy,jdbcType=BIGINT},
+      modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+      providerId = #{record.providerId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generate.pojo.Bill">
+    update smbms_bill
+    <set>
+      <if test="billCode != null">
+        billCode = #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null">
+        productDesc = #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productUnit != null">
+        productUnit = #{productUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="productCount != null">
+        productCount = #{productCount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null">
+        totalPrice = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isPayment != null">
+        isPayment = #{isPayment,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        createdBy = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null">
+        creationDate = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null">
+        modifyBy = #{modifyBy,jdbcType=BIGINT},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="providerId != null">
+        providerId = #{providerId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generate.pojo.Bill">
+    update smbms_bill
+    set billCode = #{billCode,jdbcType=VARCHAR},
+      productName = #{productName,jdbcType=VARCHAR},
+      productDesc = #{productDesc,jdbcType=VARCHAR},
+      productUnit = #{productUnit,jdbcType=VARCHAR},
+      productCount = #{productCount,jdbcType=DECIMAL},
+      totalPrice = #{totalPrice,jdbcType=DECIMAL},
+      isPayment = #{isPayment,jdbcType=INTEGER},
+      createdBy = #{createdBy,jdbcType=BIGINT},
+      creationDate = #{creationDate,jdbcType=TIMESTAMP},
+      modifyBy = #{modifyBy,jdbcType=BIGINT},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      providerId = #{providerId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

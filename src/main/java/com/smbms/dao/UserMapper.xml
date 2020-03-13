@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smbms.dao.UserMapper">
+    <!--开启二级缓存-->
+    <cache/>
+    <select id="findUserById" parameterType="long" resultType="User">
+          select * from smbms_user where id=#{id}
+    </select>
+    <select id="findUserList" resultType="User">
+        select * from smbms_user
+    </select>
+    <update id="updateUser" parameterType="User">
+        update smbms_user set userName=#{userName} where id=#{id}
+    </update>
+    <insert id="insertUser" parameterType="User">
+        insert into smbms_user (userCode,userName,userPassword) values(#{userCode},#{userName},#{userPassword})
+    </insert>
+    <delete id="deleteUserById" parameterType="Long" >
+        delete from smbms_user where id=#{id}
+    </delete>
+
+    <select id="selectUserListByContion" resultType="UserExt">
+        SELECT
+          u.id id,u.`userCode` userCode,u.`userName` userName,u.`gender` gender,u.`birthday` birthday,u.`phone` phone,r.`roleName` roleName
+        FROM
+          smbms_user u
+        JOIN smbms_role r
+        ON u.userRole=r.id
+    </select>
+    <resultMap id="userAndRoleMap" type="User">
+        <id property="id" column="id"></id>
+        <result column="userCode" property="userCode"/>
+        <result column="userName" property="userName"/>
+        <result column="userPassword" property="userPassword"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+
+        <association property="role" javaType="Role">
+            <id column="roleId"  property="id"/>
+            <result column="roleCode" property="roleCode"/>
+            <result column="roleName" property="roleName"/>
+            <result column="r_createdBy" property="createdBy"/>
+            <result column="r_creationDate" property="creationDate"/>
+
+        </association>
+    </resultMap>
+    <select id="selectUserListByContion2" resultMap="userAndRoleMap">
+        select
+          u.*,r.id roleId,r.roleCode roleCode,r.roleName roleName,r.createdBy r_createdBy,r.creationDate r_creationDate
+        from smbms_user u join smbms_role  r on u.userRole=r.id
+        <where>
+
+        </where>
+    </select>
+</mapper>

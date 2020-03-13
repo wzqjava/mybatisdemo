@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smbms.dao.RoleMapper">
+    <resultMap id="roleresultMap" type="com.smbms.pojo.Role">
+        <id property="id" column="id"></id>
+        <result column="roleCode" property="roleCode"/>
+        <result column="roleName" property="roleName"/>
+        <result column="createdBy" property="createdBy"/>
+        <result column="creationDate" property="creationDate"/>
+        <result column="modifyBy" property="modifyBy"/>
+        <result column="modifyDate" property="modifyDate"/>
+        <collection property="users" column="id" ofType="User" select="findUserByUserRole"/>
+
+    </resultMap>
+
+    <select id="findRoleById" parameterType="long" resultMap="roleresultMap">
+        select * from  smbms_role where id=#{id}
+    </select>
+
+    <select id="findUserByUserRole" parameterType="long" resultType="User">
+        select * from smbms_user where userRole=#{id}
+    </select>
+</mapper>
